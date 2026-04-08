@@ -1,11 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Adaptive Focus Companion</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adaptive Focus Companion</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h1>Adaptive Focus Companion</h1>
-  <h2>Stay Focused, Manage Your Energy</h2>
-  <p>A tool to help students manage mental energy during study sessions.</p>
+
+<div class="app">
+    <h1>Adaptive Focus Companion</h1>
+    <p class="subtitle">Check in with your energy before you begin</p>
+
+    <div class="card">
+
+        <label>Focus</label>
+        <input type="range" id="focus" min="1" max="5" value="3">
+        
+        <label>Stress</label>
+        <input type="range" id="stress" min="1" max="5" value="3">
+        
+        <label>Alertness</label>
+        <input type="range" id="alertness" min="1" max="5" value="3">
+
+        <button onclick="startSession()">Start Focus Session</button>
+
+        <div id="timer">25:00</div>
+
+    </div>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
