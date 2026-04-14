@@ -403,8 +403,6 @@ input[type="range"] {
   gap: 20px;
 }
 
-.minimal-mode .topbar,
-.minimal-mode .nav,
 .minimal-mode .wide-card,
 .minimal-mode .card:not(.center-card) {
   display: none;
