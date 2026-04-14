@@ -25,3 +25,38 @@
     <section class="panel">
       <h1>AFC</h1>
       <p class="eyebrow">ADAPTIVE FOCUS DASHBOARD</p>
+
+       <div class="dashboard-grid">
+        <div class="card">
+          <h2>Suggested focus block</h2>
+          <p class="large-stat" id="dashboardSessionLength">25 min</p>
+          <p class="small-text" id="dashboardReason">Based on your latest energy check-in.</p>
+        </div>
+
+        <div class="card center-card">
+          <h2>Session timer</h2>
+          <div id="timerDisplay" class="timer-display">25:00</div>
+          <p id="sessionStatus" class="small-text">Ready to begin.</p>
+
+          <div class="button-row small-gap">
+            <button id="beginTimerBtn" class="primary-btn">Start</button>
+            <button id="pauseTimerBtn" class="secondary-btn">Pause</button>
+            <button id="resetTimerBtn" class="secondary-btn">Reset</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Focus state</h2>
+          <div class="state-tags">
+            <span id="stateTagOne" class="state-tag">Balanced</span>
+            <span id="stateTagTwo" class="state-tag">Steady</span>
+          </div>
+
+          <h3>Suggestion box</h3>
+          <ul id="dashboardSuggestions" class="simple-list">
+            <li>Try a 1 minute breathing reset</li>
+            <li>Lower screen brightness</li>
+            <li>Stand and stretch</li>
+          </ul>
+        </div>
+      </div>
