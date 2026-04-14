@@ -342,6 +342,7 @@ function getSavedSessions() {
 
 function setupDistractionMode() {
   const toggle = document.getElementById("distractionToggle");
+  const exitBtn = document.getElementById("exitMinimalBtn");
   const isDashboardPage = window.location.pathname.includes("dashboard.html");
 
   if (!isDashboardPage) {
@@ -355,17 +356,28 @@ function setupDistractionMode() {
     document.body.classList.add("minimal-mode");
   }
 
-  if (!toggle) return;
+  if (toggle) {
+    toggle.checked = savedMode === "on";
 
-  toggle.checked = savedMode === "on";
+    toggle.addEventListener("change", () => {
+      if (toggle.checked) {
+        document.body.classList.add("minimal-mode");
+        localStorage.setItem(DISTRACTION_KEY, "on");
+      } else {
+        document.body.classList.remove("minimal-mode");
+        localStorage.setItem(DISTRACTION_KEY, "off");
+      }
+    });
+  }
 
-  toggle.addEventListener("change", () => {
-    if (toggle.checked) {
-      document.body.classList.add("minimal-mode");
-      localStorage.setItem(DISTRACTION_KEY, "on");
-    } else {
+  if (exitBtn) {
+    exitBtn.addEventListener("click", () => {
       document.body.classList.remove("minimal-mode");
       localStorage.setItem(DISTRACTION_KEY, "off");
-    }
-  });
+
+      if (toggle) {
+        toggle.checked = false;
+      }
+    });
+  }
 }
