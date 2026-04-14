@@ -4,55 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AFC | Energy Check-In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-<div class="app">
-    <h1>Adaptive Focus Companion</h1>
-    <p class="subtitle">Check in with your energy before you begin</p>
-
-    <div class="card">
- <div class="slider-group">
-        <div class="label-row">
-          <label for="focus">Focus</label>
-          <span id="focusValue">3</span>
-        </div>
-        <input type="range" id="focus" min="1" max="5" value="3" />
-      </div>
-
-      <div class="slider-group">
-        <div class="label-row">
-          <label for="stress">Stress</label>
-          <span id="stressValue">3</span>
-        </div>
-        <input type="range" id="stress" min="1" max="5" value="3" />
-      </div>
-
-      <div class="slider-group">
-        <div class="label-row">
-          <label for="alertness">Alertness</label>
-          <span id="alertnessValue">3</span>
-        </div>
-        <input type="range" id="alertness" min="1" max="5" value="3" />
-      </div>
-
-      <div class="info-box">
-        <p><strong>Recommended Session:</strong> <span id="sessionLength">25 minutes</span></p>
-        <p id="supportMessage">You seem fairly balanced right now. A steady focus session may work well.</p>
-      </div>
-
-      <div class="button-group">
-        <button id="startBtn">Start Focus Session</button>
-        <button id="resetBtn" class="secondary-btn">Reset</button>
-      </div>
-
-      <div id="timer">25:00</div>
-      <p id="status" class="status">Ready to begin.</p>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <header class="topbar">
+        <div class="brand">AFC</div>
+        <nav class="nav">
+            <a href="index.html" class="active">Check-In</a>
+            <a href="dashboard.html">Session</a>
+            <a href="insights.html">Insights</a>
+            <a href="about.html">About</a>
+    </nav>
+    <button id="themeToggle" class="theme-btn">Toggle Theme</button>
+  </header>
