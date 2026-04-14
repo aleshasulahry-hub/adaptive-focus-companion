@@ -18,7 +18,7 @@
       <a href="insights.html">Insights</a>
       <a href="about.html">About</a>
     </nav>
-    <button id="themeToggle" class="theme-btn">Toggle Theme</button>
+    <button id="themeToggle" class="theme-btn" type="button">Toggle Theme</button>
   </header>
 
   <main class="page-shell">
@@ -26,7 +26,7 @@
       <h1>AFC</h1>
       <p class="eyebrow">ADAPTIVE FOCUS DASHBOARD</p>
 
-       <div class="dashboard-grid">
+      <div class="dashboard-grid">
         <div class="card">
           <h2>Suggested focus block</h2>
           <p class="large-stat" id="dashboardSessionLength">25 min</p>
@@ -39,9 +39,9 @@
           <p id="sessionStatus" class="small-text">Ready to begin.</p>
 
           <div class="button-row small-gap">
-            <button id="beginTimerBtn" class="primary-btn">Start</button>
-            <button id="pauseTimerBtn" class="secondary-btn">Pause</button>
-            <button id="resetTimerBtn" class="secondary-btn">Reset</button>
+            <button id="beginTimerBtn" class="primary-btn" type="button">Start</button>
+            <button id="pauseTimerBtn" class="secondary-btn" type="button">Pause</button>
+            <button id="resetTimerBtn" class="secondary-btn" type="button">Reset</button>
           </div>
         </div>
 
@@ -60,25 +60,6 @@
           </ul>
         </div>
       </div>
-
-<div class="wide-card">
-  <div class="toggle-row">
-    <div>
-      <h2>Minimal distraction mode</h2>
-      <p class="small-text">Hide extra text and keep only the essential session info visible.</p>
-      
-      <!-- ADD THIS BUTTON HERE -->
-      <button id="exitMinimalBtn" class="secondary-btn">
-        Exit Minimal Mode
-      </button>
-    </div>
-
-    <label class="switch">
-      <input type="checkbox" id="distractionToggle">
-      <span class="slider"></span>
-    </label>
-  </div>
-</div>
     </section>
   </main>
 

@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AFC | Energy Check-In</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AFC | Energy Check-In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header class="topbar">
-        <div class="brand">AFC</div>
-        <nav class="nav">
-            <a href="index.html" class="active">Check-In</a>
-            <a href="dashboard.html">Session</a>
-            <a href="insights.html">Insights</a>
-            <a href="about.html">About</a>
+  <header class="topbar">
+    <div class="brand">AFC</div>
+    <nav class="nav">
+      <a href="index.html" class="active">Check-In</a>
+      <a href="dashboard.html">Session</a>
+      <a href="insights.html">Insights</a>
+      <a href="about.html">About</a>
     </nav>
-    <button id="themeToggle" class="theme-btn">Toggle Theme</button>
+    <button id="themeToggle" class="theme-btn" type="button">Toggle Theme</button>
   </header>
 
-    <main class="page-shell">
+  <main class="page-shell">
     <section class="panel panel-checkin">
       <h1>AFC</h1>
       <p class="eyebrow">QUICK ENERGY CHECK-IN</p>
@@ -29,16 +29,16 @@
       <div class="content-block">
         <h2>How are you feeling right now?</h2>
 
-       <div class="slider-group">
+        <div class="slider-group">
           <div class="slider-head">
             <label for="focus">Focus</label>
             <span id="focusValue">3</span>
           </div>
           <input type="range" id="focus" min="1" max="5" value="3">
           <p class="slider-note">How well can you concentrate right now?</p>
-        </div>  
+        </div>
 
-         <div class="slider-group">
+        <div class="slider-group">
           <div class="slider-head">
             <label for="stress">Stress</label>
             <span id="stressValue">3</span>
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-       <div class="content-block">
+      <div class="content-block">
         <h2>Recommended session</h2>
         <p class="recommendation-time" id="recommendedTime">25 minutes</p>
         <p class="support-text" id="supportMessage">
@@ -75,8 +75,8 @@
       </div>
 
       <div class="button-row">
-        <button id="startSessionBtn" class="primary-btn">Start Adaptive Session</button>
-        <button id="resetCheckinBtn" class="secondary-btn">Reset</button>
+        <button id="startSessionBtn" class="primary-btn" type="button">Start Adaptive Session</button>
+        <button id="resetCheckinBtn" class="secondary-btn" type="button">Reset</button>
       </div>
     </section>
   </main>

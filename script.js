@@ -1,20 +1,23 @@
 const SESSION_KEY = "afc_sessions";
 const CURRENT_KEY = "afc_current_session";
 const THEME_KEY = "afc_theme";
-const DISTRACTION_KEY = "afc_minimal_mode";
 
 let timerInterval = null;
-let timeLeft = 0;
+let timeLeft = 25 * 60;
 let timerRunning = false;
 
 document.addEventListener("DOMContentLoaded", () => {
+  clearOldAfcStorage();
   applySavedTheme();
   setupThemeToggle();
   setupCheckinPage();
   setupDashboardPage();
   setupInsightsPage();
-  setupDistractionMode();
 });
+
+function clearOldAfcStorage() {
+  localStorage.removeItem("afc_minimal_mode");
+}
 
 function applySavedTheme() {
   const savedTheme = localStorage.getItem(THEME_KEY);
@@ -84,6 +87,7 @@ function setupCheckinPage() {
     );
 
     data.createdAt = new Date().toLocaleString();
+
     localStorage.setItem(CURRENT_KEY, JSON.stringify(data));
 
     const sessions = getSavedSessions();
@@ -118,7 +122,7 @@ function buildSessionData(focus, stress, alertness) {
   let tags = [];
 
   if (stress >= 4 && alertness <= 2) {
-    message = "You may benefit from a shorter session with a gentle pace.";
+    message = "You may benefit from a shorter session with a gentler pace.";
     suggestions = [
       "Try a 1 minute breathing reset",
       "Lower screen brightness",
@@ -180,7 +184,6 @@ function setupDashboardPage() {
   const stateTagTwo = document.getElementById("stateTagTwo");
   const dashboardSuggestions = document.getElementById("dashboardSuggestions");
   const sessionStatus = document.getElementById("sessionStatus");
-
   const beginTimerBtn = document.getElementById("beginTimerBtn");
   const pauseTimerBtn = document.getElementById("pauseTimerBtn");
   const resetTimerBtn = document.getElementById("resetTimerBtn");
@@ -224,6 +227,8 @@ function setupDashboardPage() {
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
         timerRunning = false;
+        timeLeft = 0;
+        updateTimerDisplay(timerDisplay);
         sessionStatus.textContent = "Session complete. Take a break, stretch, or hydrate.";
         alert("Session complete! Take a short break.");
       }
@@ -239,8 +244,8 @@ function setupDashboardPage() {
   resetTimerBtn.addEventListener("click", () => {
     clearInterval(timerInterval);
     timerRunning = false;
-    const session = JSON.parse(localStorage.getItem(CURRENT_KEY));
-    timeLeft = session ? session.minutes * 60 : 25 * 60;
+    const latestSession = JSON.parse(localStorage.getItem(CURRENT_KEY));
+    timeLeft = latestSession ? latestSession.minutes * 60 : 25 * 60;
     updateTimerDisplay(timerDisplay);
     sessionStatus.textContent = "Timer reset.";
   });
@@ -249,8 +254,7 @@ function setupDashboardPage() {
 function updateTimerDisplay(timerDisplay) {
   const mins = Math.floor(timeLeft / 60);
   const secs = timeLeft % 60;
-  timerDisplay.textContent =
-    `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  timerDisplay.textContent = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
 function setupInsightsPage() {
@@ -274,6 +278,7 @@ function setupInsightsPage() {
     avgStress.textContent = "0";
     avgAlertness.textContent = "0";
     avgMinutes.textContent = "0 min";
+    historyList.innerHTML = `<p class="small-text">No sessions saved yet.</p>`;
     return;
   }
 
@@ -296,7 +301,7 @@ function setupInsightsPage() {
     addListItem(insightRecommendations, "Your stress levels often run high. Consider shorter sessions more often.");
   }
   if (alertnessAvg <= 2.5) {
-    addListItem(insightRecommendations, "Your alertness trends low. Earlier sessions may help.");
+    addListItem(insightRecommendations, "Your alertness trends lower. Earlier sessions may help.");
   }
   if (minutesAvg > 35) {
     addListItem(insightRecommendations, "Longer sessions appear often. Make sure to schedule breaks between them.");
@@ -338,46 +343,3 @@ function averageOf(array, key) {
 
 function getSavedSessions() {
   return JSON.parse(localStorage.getItem(SESSION_KEY)) || [];
-}
-
-function setupDistractionMode() {
-  const toggle = document.getElementById("distractionToggle");
-  const exitBtn = document.getElementById("exitMinimalBtn");
-  const isDashboardPage = window.location.pathname.includes("dashboard.html");
-
-  if (!isDashboardPage) {
-    document.body.classList.remove("minimal-mode");
-    return;
-  }
-
-  const savedMode = localStorage.getItem(DISTRACTION_KEY);
-
-  if (savedMode === "on") {
-    document.body.classList.add("minimal-mode");
-  }
-
-  if (toggle) {
-    toggle.checked = savedMode === "on";
-
-    toggle.addEventListener("change", () => {
-      if (toggle.checked) {
-        document.body.classList.add("minimal-mode");
-        localStorage.setItem(DISTRACTION_KEY, "on");
-      } else {
-        document.body.classList.remove("minimal-mode");
-        localStorage.setItem(DISTRACTION_KEY, "off");
-      }
-    });
-  }
-
-  if (exitBtn) {
-    exitBtn.addEventListener("click", () => {
-      document.body.classList.remove("minimal-mode");
-      localStorage.setItem(DISTRACTION_KEY, "off");
-
-      if (toggle) {
-        toggle.checked = false;
-      }
-    });
-  }
-}
