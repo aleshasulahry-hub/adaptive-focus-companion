@@ -342,6 +342,13 @@ function getSavedSessions() {
 
 function setupDistractionMode() {
   const toggle = document.getElementById("distractionToggle");
+  const isDashboardPage = window.location.pathname.includes("dashboard.html");
+
+  if (!isDashboardPage) {
+    document.body.classList.remove("minimal-mode");
+    return;
+  }
+
   const savedMode = localStorage.getItem(DISTRACTION_KEY);
 
   if (savedMode === "on") {
