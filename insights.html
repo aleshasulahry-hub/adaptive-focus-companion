@@ -34,7 +34,7 @@
             <div class="axis-x"></div>
             <div class="chart-line"></div>
           </div>
-          <p class="small-text">A simple view of your recent session patterns.</p>
+          <p class="small-text">A simple visual of your recent session patterns.</p>
         </div>
 
         <div class="card">
@@ -49,11 +49,25 @@
         </div>
 
         <div class="card">
-          <h2>Recommendations</h2>
-          <ul id="insightRecommendations" class="simple-list">
-            <li>Complete a check-in to start receiving recommendations.</li>
-          </ul>
+          <h2>Consistency</h2>
+          <p class="large-stat" id="streakCount">0</p>
+          <p class="small-text">Current session streak</p>
+          <p class="small-text" id="streakMessage">Complete a session to begin your streak.</p>
         </div>
+      </div>
+
+      <div class="wide-card">
+        <div class="wide-card-head">
+          <div>
+            <h2>Recommendations</h2>
+            <p class="small-text">Suggestions based on your saved check-ins.</p>
+          </div>
+          <button id="clearHistoryBtn" class="secondary-btn" type="button">Clear History</button>
+        </div>
+
+        <ul id="insightRecommendations" class="simple-list">
+          <li>Complete a check-in to start receiving recommendations.</li>
+        </ul>
       </div>
 
       <div class="wide-card">
@@ -62,7 +76,6 @@
             <h2>Recent sessions</h2>
             <p class="small-text">Your most recent saved check-ins from local storage.</p>
           </div>
-          <button id="clearHistoryBtn" class="secondary-btn" type="button">Clear History</button>
         </div>
 
         <div id="historyList" class="history-list">
