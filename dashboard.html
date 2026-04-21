@@ -31,11 +31,17 @@
           <h2>Suggested focus block</h2>
           <p class="large-stat" id="dashboardSessionLength">25 min</p>
           <p class="small-text" id="dashboardReason">Based on your latest energy check-in.</p>
+          <p class="small-text emphasis-text" id="dashboardIntensity">Balanced session</p>
         </div>
 
         <div class="card center-card">
           <h2>Session timer</h2>
           <div id="timerDisplay" class="timer-display">25:00</div>
+
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+
           <p id="sessionStatus" class="small-text">Ready to begin.</p>
 
           <div class="button-row small-gap">
@@ -52,12 +58,31 @@
             <span id="stateTagTwo" class="state-tag">Steady</span>
           </div>
 
+          <h3>Encouragement</h3>
+          <p id="dashboardEncouragement" class="small-text">
+            Stay steady. Progress grows through consistency.
+          </p>
+
           <h3>Suggestion box</h3>
           <ul id="dashboardSuggestions" class="simple-list">
             <li>Try a 1 minute breathing reset</li>
             <li>Lower screen brightness</li>
             <li>Stand and stretch</li>
           </ul>
+        </div>
+      </div>
+
+      <div class="wide-card">
+        <div class="wide-card-head">
+          <div>
+            <h2>Break support</h2>
+            <p class="small-text">When your session ends, AFC suggests a reset.</p>
+          </div>
+        </div>
+
+        <div class="break-box">
+          <p id="breakSuggestion" class="large-break-text">Complete a session to receive a break suggestion.</p>
+          <p id="breakDuration" class="small-text">Suggested break: —</p>
         </div>
       </div>
     </section>
