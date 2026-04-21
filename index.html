@@ -1,385 +1,93 @@
-:root {
-  --bg: #f6f1f1;
-  --panel: #efe7e7;
-  --card: #f9f4f4;
-  --text: #4a3a3a;
-  --muted: #8a6e6e;
-  --accent: #9a5858;
-  --accent-dark: #824747;
-  --border: #dccccc;
-  --shadow: rgba(70, 40, 40, 0.08);
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AFC | Energy Check-In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">AFC</div>
+    <nav class="nav">
+      <a href="index.html" class="active">Check-In</a>
+      <a href="dashboard.html">Session</a>
+      <a href="insights.html">Insights</a>
+      <a href="about.html">About</a>
+    </nav>
+    <button id="themeToggle" class="theme-btn" type="button">Toggle Theme</button>
+  </header>
 
-body.dark-mode {
-  --bg: #1e1919;
-  --panel: #2a2323;
-  --card: #342b2b;
-  --text: #f2e9e9;
-  --muted: #cdb6b6;
-  --accent: #d08d8d;
-  --accent-dark: #b57575;
-  --border: #4d3d3d;
-  --shadow: rgba(0, 0, 0, 0.28);
-}
+  <main class="page-shell">
+    <section class="panel panel-checkin">
+      <h1>AFC</h1>
+      <p class="eyebrow">QUICK ENERGY CHECK-IN</p>
 
-* {
-  box-sizing: border-box;
-}
+      <div class="content-block">
+        <h2>How are you feeling right now?</h2>
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Inter", sans-serif;
-}
+        <div class="slider-group">
+          <div class="slider-head">
+            <label for="focus">Focus</label>
+            <span id="focusValue">3</span>
+          </div>
+          <input type="range" id="focus" min="1" max="5" value="3">
+          <p class="slider-note">How well can you concentrate right now?</p>
+        </div>
 
-h1,
-h2,
-h3,
-.brand {
-  font-family: "Cormorant Garamond", serif;
-}
+        <div class="slider-group">
+          <div class="slider-head">
+            <label for="stress">Stress</label>
+            <span id="stressValue">3</span>
+          </div>
+          <input type="range" id="stress" min="1" max="5" value="3">
+          <p class="slider-note">How overwhelmed or tense do you feel?</p>
+        </div>
 
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 18px 30px;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+        <div class="slider-group">
+          <div class="slider-head">
+            <label for="alertness">Alertness</label>
+            <span id="alertnessValue">3</span>
+          </div>
+          <input type="range" id="alertness" min="1" max="5" value="3">
+          <p class="slider-note">How awake and mentally sharp do you feel?</p>
+        </div>
+      </div>
 
-.brand {
-  font-size: 2rem;
-}
+      <div class="content-block">
+        <h2>Recommended session</h2>
+        <p class="recommendation-time" id="recommendedTime">25 minutes</p>
+        <p class="focus-state" id="focusStateText">State: Balanced • Steady</p>
+        <p class="support-text" id="supportMessage">
+          You seem fairly balanced right now. A steady focus session may work well.
+        </p>
+        <p class="small-text emphasis-text" id="sessionIntensity">Session style: Balanced session</p>
 
-.nav {
-  display: flex;
-  gap: 18px;
-  flex-wrap: wrap;
-}
+        <div class="quote-box">
+          <h3>Encouragement</h3>
+          <p id="encouragementText">A calm start is still a strong start.</p>
+        </div>
 
-.nav a {
-  text-decoration: none;
-  color: var(--muted);
-  font-weight: 500;
-  font-size: 0.95rem;
-}
+        <div class="suggestion-box">
+          <h3>Supportive suggestions</h3>
+          <ul id="checkinSuggestions">
+            <li>Keep water nearby</li>
+            <li>Begin with your most important task</li>
+            <li>Take a short break afterward</li>
+          </ul>
+        </div>
+      </div>
 
-.nav a.active,
-.nav a:hover {
-  color: var(--accent);
-}
+      <div class="button-row">
+        <button id="startSessionBtn" class="primary-btn" type="button">Start Adaptive Session</button>
+        <button id="resetCheckinBtn" class="secondary-btn" type="button">Reset</button>
+      </div>
+    </section>
+  </main>
 
-.theme-btn,
-.primary-btn,
-.secondary-btn {
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-  font-family: inherit;
-  transition: 0.2s ease;
-}
-
-.theme-btn {
-  padding: 10px 16px;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-}
-
-.primary-btn {
-  padding: 13px 22px;
-  background: var(--accent);
-  color: white;
-}
-
-.primary-btn:hover {
-  background: var(--accent-dark);
-}
-
-.secondary-btn {
-  padding: 13px 22px;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-}
-
-.secondary-btn:hover,
-.theme-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.page-shell {
-  display: flex;
-  justify-content: center;
-  padding: 38px 20px 60px;
-}
-
-.panel {
-  width: 100%;
-  max-width: 1100px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 34px;
-  box-shadow: 0 14px 32px var(--shadow);
-}
-
-.panel-checkin {
-  max-width: 760px;
-}
-
-h1 {
-  margin: 0;
-  font-size: 4.5rem;
-  text-align: center;
-  line-height: 1;
-}
-
-.eyebrow {
-  text-align: center;
-  letter-spacing: 0.14em;
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin: 6px 0 28px;
-}
-
-.content-block,
-.card,
-.wide-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 22px;
-  padding: 24px;
-  box-shadow: 0 10px 24px var(--shadow);
-}
-
-.content-block + .content-block {
-  margin-top: 20px;
-}
-
-.content-block h2,
-.card h2,
-.wide-card h2 {
-  margin: 0 0 14px;
-  font-size: 2rem;
-}
-
-.slider-group {
-  margin-bottom: 22px;
-}
-
-.slider-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.slider-head label {
-  font-weight: 600;
-}
-
-.slider-head span {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-input[type="range"] {
-  width: 100%;
-  accent-color: var(--accent);
-}
-
-.slider-note,
-.small-text,
-.support-text {
-  color: var(--muted);
-  line-height: 1.6;
-  margin-top: 8px;
-}
-
-.recommendation-time {
-  margin: 0 0 8px;
-  font-size: 2rem;
-  color: var(--accent);
-  font-weight: 700;
-}
-
-.suggestion-box {
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-}
-
-.suggestion-box h3 {
-  margin: 0 0 10px;
-  font-size: 1.4rem;
-}
-
-.suggestion-box ul,
-.simple-list {
-  margin: 0;
-  padding-left: 18px;
-  line-height: 1.8;
-}
-
-.button-row {
-  display: flex;
-  gap: 12px;
-  margin-top: 22px;
-  flex-wrap: wrap;
-}
-
-.small-gap {
-  justify-content: center;
-}
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.center-card {
-  text-align: center;
-}
-
-.large-stat {
-  font-size: 2.8rem;
-  color: var(--accent);
-  margin: 12px 0;
-}
-
-.timer-display {
-  font-size: 3.6rem;
-  font-weight: 700;
-  color: var(--accent);
-  margin: 10px 0 8px;
-}
-
-.state-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.state-tag {
-  display: inline-block;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.fake-chart {
-  position: relative;
-  height: 220px;
-  margin: 16px 0 6px;
-}
-
-.axis-y,
-.axis-x {
-  position: absolute;
-  background: var(--accent);
-}
-
-.axis-y {
-  left: 22px;
-  bottom: 22px;
-  width: 6px;
-  height: 150px;
-}
-
-.axis-x {
-  left: 22px;
-  bottom: 22px;
-  width: 180px;
-  height: 6px;
-}
-
-.chart-line {
-  position: absolute;
-  left: 52px;
-  bottom: 52px;
-  width: 150px;
-  height: 70px;
-  border-bottom: 8px solid var(--muted);
-  border-left: 8px solid transparent;
-  border-radius: 40px;
-  transform: skewX(-25deg);
-}
-
-.stats-list p {
-  margin: 10px 0;
-}
-
-.wide-card {
-  margin-top: 22px;
-}
-
-.wide-card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.history-list {
-  display: grid;
-  gap: 12px;
-  margin-top: 18px;
-}
-
-.history-item {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 14px;
-}
-
-.history-item p {
-  margin: 6px 0;
-}
-
-.about-layout {
-  display: grid;
-  gap: 20px;
-}
-
-@media (max-width: 900px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 700px) {
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav {
-    gap: 12px;
-  }
-
-  .panel {
-    padding: 24px;
-  }
-
-  h1 {
-    font-size: 3.2rem;
-  }
-
-  .timer-display {
-    font-size: 2.8rem;
-  }
-}
+  <script src="script.js"></script>
+</body>
+</html>
