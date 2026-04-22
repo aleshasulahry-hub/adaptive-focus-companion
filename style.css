@@ -340,6 +340,27 @@ input[type="range"] {
   color: var(--text);
 }
 
+.smart-break-details {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.break-pill {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.break-steps {
+  margin-top: 10px;
+}
+
 .fake-chart {
   position: relative;
   height: 220px;

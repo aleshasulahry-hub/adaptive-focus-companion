@@ -68,6 +68,7 @@ function setupCheckinPage() {
   const focusStateText = document.getElementById("focusStateText");
   const sessionIntensity = document.getElementById("sessionIntensity");
   const encouragementText = document.getElementById("encouragementText");
+  const smartBreakPreview = document.getElementById("smartBreakPreview"); // NEW
 
   function updateCheckinDisplay() {
     const currentFocus = Number(focus.value);
@@ -85,6 +86,11 @@ function setupCheckinPage() {
     supportMessage.textContent = data.message;
     sessionIntensity.textContent = `Session style: ${data.intensity}`;
     encouragementText.textContent = data.encouragement;
+
+    
+    if (smartBreakPreview) {
+      smartBreakPreview.textContent = `Planned break style: ${data.breakPlan.type} • ${data.breakPlan.duration}`;
+    }
 
     checkinSuggestions.innerHTML = "";
     data.suggestions.forEach((item) => {
@@ -202,6 +208,16 @@ function buildSessionData(focus, stress, alertness) {
     tags = ["Balanced", "Steady"];
   }
 
+  
+  const breakPlan = generateSmartBreakPlan({
+    minutes,
+    focus,
+    stress,
+    alertness,
+    intensity,
+    tags
+  });
+
   return {
     focus,
     stress,
@@ -211,7 +227,119 @@ function buildSessionData(focus, stress, alertness) {
     suggestions,
     tags,
     intensity,
-    encouragement
+    encouragement,
+    breakPlan // NEW
+  };
+}
+
+
+function generateSmartBreakPlan(sessionData) {
+  const { minutes, stress, alertness, focus, intensity } = sessionData;
+
+  let duration = "5 min";
+  let type = "Standard reset";
+  let reason = "This break matches the length of your focus session.";
+  let steps = [
+    "Stand up for a moment",
+    "Rest your eyes from the screen",
+    "Take a few slow breaths"
+  ];
+  let summary = "Take a short reset before beginning again.";
+
+  if (minutes <= 15) {
+    duration = "3–5 min";
+    type = "Quick recharge";
+    reason = "Your session was short, so a brief reset should be enough.";
+    steps = [
+      "Roll your shoulders and neck",
+      "Look away from the screen for 20–30 seconds",
+      "Take a sip of water"
+    ];
+    summary = "Take a quick recharge break to stay fresh without losing momentum.";
+  } else if (minutes <= 30) {
+    duration = "5 min";
+    type = "Light reset";
+    reason = "A moderate session pairs well with a short physical and mental reset.";
+    steps = [
+      "Stand and stretch",
+      "Hydrate",
+      "Take a few deep breaths before returning"
+    ];
+    summary = "Take a light reset to keep your attention steady.";
+  } else if (minutes <= 45) {
+    duration = "8 min";
+    type = "Movement break";
+    reason = "A longer session benefits from more movement and screen recovery.";
+    steps = [
+      "Walk around for a few minutes",
+      "Relax your jaw and shoulders",
+      "Step away from your workspace briefly"
+    ];
+    summary = "Take a movement-focused break to reset your body and attention.";
+  } else {
+    duration = "10 min";
+    type = "Full reset";
+    reason = "A deep focus block needs a fuller recovery break afterward.";
+    steps = [
+      "Leave your screen completely",
+      "Walk, stretch, or change rooms",
+      "Hydrate and let your eyes rest"
+    ];
+    summary = "Take a fuller reset so your next session feels sustainable.";
+  }
+
+  if (stress >= 4) {
+    duration = minutes >= 35 ? "10 min" : "8 min";
+    type = "Calming reset";
+    reason = "Your stress level was elevated, so AFC is prioritizing a calmer recovery.";
+    steps = [
+      "Do 1 minute of slow breathing",
+      "Unclench your shoulders and jaw",
+      "Avoid jumping straight into the next task"
+    ];
+    summary = "Take a calming break to lower tension before returning to work.";
+  }
+
+  if (stress >= 4 && alertness <= 2) {
+    duration = "10 min";
+    type = "Low-stimulation reset";
+    reason = "You showed both high stress and low alertness, so a gentler break is recommended.";
+    steps = [
+      "Step away from the screen",
+      "Sit somewhere quiet or dimmer",
+      "Hydrate and breathe slowly for 1 minute"
+    ];
+    summary = "Take a quiet, low-stimulation break to reset your energy.";
+  } else if (alertness <= 2 && stress < 4) {
+    type = "Energy reset";
+    reason = "Your alertness was low, so AFC suggests a break that helps you wake up gently.";
+    steps = [
+      "Stand up and move around",
+      "Drink cold water",
+      "Get brighter light or fresh air if possible"
+    ];
+    summary = "Take an energy reset to feel more awake before your next block.";
+  } else if (focus >= 4 && stress <= 2 && minutes >= 35) {
+    type = "Protect-your-momentum break";
+    reason = "You were focused and working well, so the goal is to reset without losing momentum.";
+    steps = [
+      "Do a short walk or stretch",
+      "Hydrate",
+      "Return before distractions pull you away"
+    ];
+    summary = "Take a short intentional break so you can return while your momentum is still strong.";
+  }
+
+  if (intensity === "Deep focus session" && stress <= 3) {
+    summary = "You completed a deep focus block, so a fuller recovery break will help sustain performance.";
+  }
+
+  return {
+    duration,
+    type,
+    reason,
+    steps,
+    summary
   };
 }
 
@@ -234,6 +362,11 @@ function setupDashboardPage() {
   const breakDuration = document.getElementById("breakDuration");
   const dashboardEncouragement = document.getElementById("dashboardEncouragement");
 
+  
+  const breakType = document.getElementById("breakType");
+  const breakReason = document.getElementById("breakReason");
+  const breakSteps = document.getElementById("breakSteps");
+
   const session = JSON.parse(localStorage.getItem(CURRENT_KEY));
 
   if (session) {
@@ -253,7 +386,9 @@ function setupDashboardPage() {
 
     timeLeft = session.minutes * 60;
     totalTime = session.minutes * 60;
-    setBreakSuggestion(session.minutes, breakSuggestion, breakDuration);
+
+   
+    setSmartBreakSuggestion(session, breakSuggestion, breakDuration, breakType, breakReason, breakSteps);
   } else {
     dashboardSessionLength.textContent = "25 min";
     dashboardReason.textContent = "No recent check-in found. Using default focus session.";
@@ -263,7 +398,31 @@ function setupDashboardPage() {
     stateTagTwo.textContent = "Default";
     timeLeft = 25 * 60;
     totalTime = 25 * 60;
-    setBreakSuggestion(25, breakSuggestion, breakDuration);
+
+    
+    setSmartBreakSuggestion(
+      {
+        minutes: 25,
+        focus: 3,
+        stress: 3,
+        alertness: 3,
+        intensity: "Balanced session",
+        tags: ["Balanced", "Default"],
+        breakPlan: generateSmartBreakPlan({
+          minutes: 25,
+          focus: 3,
+          stress: 3,
+          alertness: 3,
+          intensity: "Balanced session",
+          tags: ["Balanced", "Default"]
+        })
+      },
+      breakSuggestion,
+      breakDuration,
+      breakType,
+      breakReason,
+      breakSteps
+    );
   }
 
   updateTimerDisplay(timerDisplay);
@@ -286,9 +445,9 @@ function setupDashboardPage() {
         timeLeft = 0;
         updateTimerDisplay(timerDisplay);
         updateProgressBar(progressFill);
-        sessionStatus.textContent = "Session complete. Time for a short reset.";
+        sessionStatus.textContent = "Session complete. Time for your personalized reset.";
         updateStreak();
-        alert("Session complete! AFC has suggested a break for you below.");
+        alert("Session complete! AFC has prepared a personalized break suggestion for you below.");
       }
     }, 1000);
   });
@@ -312,7 +471,11 @@ function setupDashboardPage() {
     updateTimerDisplay(timerDisplay);
     updateProgressBar(progressFill);
     sessionStatus.textContent = "Timer reset.";
-    setBreakSuggestion(resetMinutes, breakSuggestion, breakDuration);
+
+    
+    if (latestSession) {
+      setSmartBreakSuggestion(latestSession, breakSuggestion, breakDuration, breakType, breakReason, breakSteps);
+    }
   });
 }
 
@@ -328,26 +491,33 @@ function updateProgressBar(progressFill) {
   progressFill.style.width = `${Math.max(0, Math.min(100, progress))}%`;
 }
 
-function setBreakSuggestion(minutes, breakSuggestionEl, breakDurationEl) {
-  let breakText = "";
-  let breakTime = "";
+function setSmartBreakSuggestion(session, breakSuggestionEl, breakDurationEl, breakTypeEl, breakReasonEl, breakStepsEl) {
+  const breakPlan = session.breakPlan || generateSmartBreakPlan(session);
 
-  if (minutes <= 15) {
-    breakText = "Take a short 3–5 minute break. Stand up, breathe, and rest your eyes.";
-    breakTime = "Suggested break: 5 min";
-  } else if (minutes <= 30) {
-    breakText = "Take a 5 minute break. Stretch, hydrate, or step away from the screen.";
-    breakTime = "Suggested break: 5 min";
-  } else if (minutes <= 45) {
-    breakText = "Take an 8 minute break. Walk around and reset before starting again.";
-    breakTime = "Suggested break: 8 min";
-  } else {
-    breakText = "Take a 10 minute break. Give your eyes and mind a fuller reset.";
-    breakTime = "Suggested break: 10 min";
+  if (breakSuggestionEl) {
+    breakSuggestionEl.textContent = breakPlan.summary;
   }
 
-  if (breakSuggestionEl) breakSuggestionEl.textContent = breakText;
-  if (breakDurationEl) breakDurationEl.textContent = breakTime;
+  if (breakDurationEl) {
+    breakDurationEl.textContent = `Suggested break: ${breakPlan.duration}`;
+  }
+
+  if (breakTypeEl) {
+    breakTypeEl.textContent = `Break type: ${breakPlan.type}`;
+  }
+
+  if (breakReasonEl) {
+    breakReasonEl.textContent = breakPlan.reason;
+  }
+
+  if (breakStepsEl) {
+    breakStepsEl.innerHTML = "";
+    breakPlan.steps.forEach((step) => {
+      const li = document.createElement("li");
+      li.textContent = step;
+      breakStepsEl.appendChild(li);
+    });
+  }
 }
 
 function setupInsightsPage() {
