@@ -17,6 +17,25 @@ This project exists to support students, remote workers, and other people who sp
 - **GitHub Pages** - I used GitHub Pages to deploy and host the live version of the website so it can be accessed through a public link.
 - **ChatGPT** - I used ChatGPT as an AI assistant to help with debugging, improving code structure, refining design ideas, and planning the features of the site.
 
-## Live Project
+These tools were chosen to keep the project simple, lightweight, and fully functional without requiring external frameworks.
 
-[View the project](https://aleshasulahry-hub.github.io/adaptive-focus-companion/)
+
+## How to Access It
+
+Live Site: https://aleshasulahry-hub.github.io/adaptive-focus-companion/  
+Repository: https://github.com/aleshasulahry-hub/adaptive-focus-companion/
+
+## What changed from Project 01 to Project 02?
+From Project 01 to Project 02, the focus shifted from building basic features to improving depth, usability, and polish.
+
+Key improvements include:
+- Refined the user interface for a cleaner and more consistent design
+- Improved navigation between pages to make the experience more intuitive
+- Enhanced the session system to better reflect user input from the check-in
+- Strengthened localStorage usage to properly save and display session history
+- Improved the Insights page to make past sessions more meaningful
+- Fixed bugs (such as slider updates and UI inconsistencies)
+- Improved responsiveness across different screen sizes
+- Refined dark/light mode for a smoother visual experience
+
+Instead of adding many new features, the priority was making the existing features feel complete and intentional.
